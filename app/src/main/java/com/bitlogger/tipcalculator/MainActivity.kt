@@ -56,12 +56,16 @@ fun TipCalculator() {
         }
         Spacer(modifier = Modifier.height(50.dp))
         Text(
-            text = "Tip is: $inputAmount",
+            text = "Tip is: ${calculateBasicTip(inputAmount.toFloatOrNull() ?: 0.0f)}",
             fontSize = 18.sp,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
     }
+}
+
+fun calculateBasicTip(amount: Float): Float {
+    return 0.15f * amount
 }
 
 @Composable
@@ -73,6 +77,7 @@ fun EditTextField(hint: String, inputAmount: String, onValueChanged: (String) ->
         label = {
             Text(text = hint)
         },
+        singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
     )
 }
