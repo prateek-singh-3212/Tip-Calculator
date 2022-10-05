@@ -34,6 +34,9 @@ fun TipCalculatorUI() {
 
 @Composable
 fun TipCalculator() {
+    var inputAmount by remember {
+        mutableStateOf("")
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,10 +51,12 @@ fun TipCalculator() {
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(50.dp))
-        EditTextField()
+        EditTextField("Enter Amount", inputAmount) {
+            inputAmount = it
+        }
         Spacer(modifier = Modifier.height(50.dp))
         Text(
-            text = "Tip is: ",
+            text = "Tip is: $inputAmount",
             fontSize = 18.sp,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -60,16 +65,13 @@ fun TipCalculator() {
 }
 
 @Composable
-fun EditTextField() {
-    var data by remember {
-        mutableStateOf("")
-    }
+fun EditTextField(hint: String, inputAmount: String, onValueChanged: (String) -> Unit) {
     TextField(
-        value = data,
-        onValueChange = { data = it },
+        value = inputAmount,
+        onValueChange = onValueChanged,
         modifier = Modifier.fillMaxWidth(),
         label = {
-            Text(text = "Enter Amount")
+            Text(text = hint)
         },
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
     )
